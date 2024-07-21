@@ -1,9 +1,10 @@
-import fs from 'node:fs'; // ESM import for fs
-import path from 'node:path'; // ESM import for path
-import { createCanvas } from '@napi-rs/canvas'; // ESM import for canvas
-// import { createCanvas } from 'canvas'; // ESM import for canvas
-// import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs'; // ESM import for pdfjs-dist
-import pdfjsLib from '@frozenick/pdfjs-canvas-free/legacy/build/pdf.js'; 
+import fs from 'node:fs';
+import path from 'node:path';
+import { createCanvas } from '@napi-rs/canvas';
+// import { createCanvas } from 'canvas';
+// Comment out this in pdf.mjs ---> // this.ctx.drawImage(groupCtx.canvas, 0, 0);
+// import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+import pdfjsLib from '@frozenick/pdfjs-canvas-free/build/pdf.js'; 
 
 async function convertPdfToPng(pdfPath) {
     const pdfData = await pdfjsLib.getDocument(pdfPath).promise;
@@ -19,7 +20,7 @@ async function convertPdfToPng(pdfPath) {
             viewport: viewport
         };
 
-        await page.render(renderContext).promise; // Ensure to await the render
+        await page.render(renderContext).promise;
         const pngPath = path.join(path.dirname(pdfPath), `${path.basename(pdfPath, path.extname(pdfPath))}_page${i + 1}.png`);
         // const out = fs.createWriteStream(pngPath);
         // const stream = canvas.createPNGStream();
